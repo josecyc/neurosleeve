@@ -2,6 +2,7 @@ import argparse, time, os, sys, signal, datetime
 import pandas as pd
 import numpy as np
 from osc_helper import *
+from collections import deque
 from colored import fg, attr
 if sys.version_info.major == 3:
     from pythonosc import dispatcher
@@ -11,7 +12,6 @@ elif sys.version_info.major == 2:
 
 #globals
 g_iter = 0
-file_iter = 0
 label_iter = 0
 CHANNELS = [
     'ch1', 'ch2',
@@ -23,65 +23,85 @@ LABELS = [
     'alpha', 'go', 'left', 'neutral',
     'omega', 'right', 'stop'
     ]
-LABEL_COUNT = {label:0 for label in LABELS}
+LABEL_COUNT = {
+    label: len(os.listdir('osc_data/{}'.format(label))) + 1
+    for label in LABELS
+    }
+file_iter = np.sum(list(LABEL_COUNT.values())) - 6
 NB_LABELS = len(LABELS)
 COLORS = [
-    'red', 'green', 'yellow', 'light_blue', 'magenta', 'cyan',
-    'white', 'light_gray', 'light_red', 'light_green', 'light_yellow',
-    'cyan_3', 'green_3b', 'blue_violet', 'light_blue', 'yellow'
+    'red', 'green', 'yellow', 'light_blue',
+    'magenta', 'cyan', 'white'
     ]
 INTERVAL = 15 # seconds to record of each label
+SAMPLE_RATE = 200
+SAMPLES_PER_INTERVAL = INTERVAL * SAMPLE_RATE
 ROOT = os.getcwd()
-CHECKPOINTS = list(range(1050,3050,50))
+CHECKPOINTS = list(range(1049,3049,50))
 
 def output_command(s_label, color):
-    '''Prints command to be said'''
+    '''Prints command to be excecuted'''
     color = fg(color)
     reset = attr('reset')
-    print(color + 
-            "#" * 42 + "\n" + 
-            "#" * 42 + "\n" + 
-            "    {} \n".format(s_label) +
-            "#" * 42 + "\n" +
-            "#" * 42 +
-            reset)
+    print(
+        color
+        + "#" * 42 + "\n"
+        + "#" * 42 + "\n"
+        + "    {} \n".format(s_label)
+        + "#" * 42 + "\n"
+        + "#" * 42
+        +reset
+        )
 
 def dframe2csv(csv_path):
-    '''Turns dictionary with data from the four channels to pd.DataFrame
-    and then into a csv'''
-    global LABEL_COUNT
-    global label_iter
+    '''Turns dictionary with data from the four channels into a pd.DataFrame
+    and then into a .csv file
     
-    df = pd.DataFrame(CH_DATA)
+    Keyword arguments:
+    csv_path -- path to the label's directory
+    '''
+    global LABEL_COUNT, label_iter
+    
     label = LABELS[label_iter]
-    df.to_csv(csv_path + "/{}/".format(label) + str(LABEL_COUNT[label]) + ".csv", ",")
-    print("Produced csv no: {} lable: {}".format(file_iter, label))
+    df = pd.DataFrame(CH_DATA)
+    df.to_csv(csv_path + "/{}/".format(label) + str(LABEL_COUNT[label]) + ".csv", index=False)
+    
+    print(' ' * 42, end='\r')
+    print("Produced {}'s csv no.: {}, sample: {}".format(label, LABEL_COUNT[label], file_iter), end='\r')
+    
     LABEL_COUNT[label] += 1 
-    if label_iter == NB_LABELS - 1:
-        label_iter = 0
-    else:
-        label_iter += 1
+    
 
 def stream_window(*args):
-    global g_iter, file_iter, label_iter
-    global CH_DATA
+    '''Outputs gestures to be excecuted, receives data from
+    server and stores 50 samples inside a global dictionary,
+    calls dframe2csv after 5 seconds after the label appears
+    on screen (this gives you time to get your arm in the
+    right position).
+    '''
+    global g_iter, file_iter, label_iter, CH_DATA
 
-    if g_iter % (200 * INTERVAL) == 0:
+    if g_iter % SAMPLES_PER_INTERVAL == 0:
+        if g_iter != 0:
+            print('')
+        if label_iter == NB_LABELS - 1:
+            label_iter = 0
+        else:
+            label_iter += 1
         output_command(LABELS[label_iter], COLORS[label_iter])
 
     for x in range(1, NB_CHANNELS + 1):
         ch = 'ch{}'.format(x)
         if g_iter >= 50:
             CH_DATA[ch].popleft()
-        CH_DATA[ch].append(round(args[x], 2))
+        CH_DATA[ch].append(round(args[x + 1], 2))
 
     g_iter += 1
-    if g_iter % (200 * INTERVAL) in CHECKPOINTS: # number of lines of data until packed into a csv file.
+    if g_iter % SAMPLES_PER_INTERVAL in CHECKPOINTS:
         dframe2csv(args[1][0])
         file_iter += 1
 
 if __name__ == "__main__":
-# Collect command line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("--ip",
                         default="localhost", 
@@ -93,19 +113,21 @@ if __name__ == "__main__":
     parser.add_argument("--address",
                         default="/openbci", 
                         help="address to listen to, default=/openbci")
-    parser.add_argument("--fname",
-                        default=str(datetime.datetime.now())[:-7],
-                        help="folder name, default=current time")
     args = parser.parse_args()
 
     if sys.version_info.major == 3:
-    # Set up necessary parameters from command line
         dispatcher = dispatcher.Dispatcher()
         
-        dir_path = os.path.join(os.getcwd(), "osc_data", args.fname)
-        os.mkdir(dir_path)
+        dir_path = os.path.join(ROOT, "osc_data")
+        try:
+            os.mkdir(dir_path)
+        except FileExistsError:
+            pass
         for label in LABELS:
-            os.mkdir(os.path.join(dir_path, label))
+            try:
+                os.mkdir(os.path.join(dir_path, label))
+            except FileExistsError:
+                pass
         dispatcher.map("/openbci", stream_window, dir_path)
         signal.signal(signal.SIGINT, exit_print)
 
@@ -118,7 +140,7 @@ if __name__ == "__main__":
         print("ADDRESS:", args.address)
         print('--------------------')
 
-        # connect server
+        # Connect server
         server = osc_server.BlockingOSCUDPServer(
             (args.ip, args.port), dispatcher)
         server.serve_forever()

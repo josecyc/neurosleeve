@@ -5,8 +5,11 @@ import signal as sg
 from pynput.keyboard import Key, Controller
 from collections import deque, Counter
 from osc_helper import *
-from pythonosc import dispatcher
-from pythonosc import osc_server
+if sys.version_info.major == 3:
+    from pythonosc import dispatcher
+    from pythonosc import osc_server
+elif sys.version_info.major == 2:
+    import OSC
 from tensorflow.keras.models import load_model
 from scipy import signal
 from time import sleep
@@ -14,10 +17,16 @@ from time import sleep
 # globals
 g_iter = 0
 TIMES = list(range(0,200,10))
-CHANNELS = ['ch1', 'ch2', 'ch3', 'ch4']
+CHANNELS = [
+    'ch1', 'ch2',
+    'ch3', 'ch4'
+    ]
 CH_DATA = {ch: deque() for ch in CHANNELS}
 NB_CHANNELS = len(CH_DATA.keys())
-LABELS = ['right', 'go', 'left', 'stop', 'neutral', 'omega', 'alpha']
+LABELS = [
+    'right', 'go', 'left', 'stop',
+    'neutral', 'omega', 'alpha'
+    ]
 keys = [None, Key.left, None, Key.space, None, Key.right, None]
 shape = (6, 21, 4)
 flat_dim = shape[0]*shape[1]*shape[2]
@@ -30,6 +39,11 @@ keyboard = Controller()
 ts = 10
 
 def preprocess(x_train):
+    '''Creates spectrograms for each channel inside the data stream
+    
+    Keyword arguments:
+    x_train -- raw data from stream
+    '''
     sg = np.zeros((1, 6, 21, 4))
     for i in range(4):
         frequencies, times, spec = signal.spectrogram(x=x_train[CHANNELS[i]],
@@ -38,6 +52,14 @@ def preprocess(x_train):
     return sg
 
 def predict(features, threshold):
+    '''Makes a prediction based on the model's confidence,
+    if the confidence is smaller than confiddence threshold,
+    then it pregicts
+    
+    Keyword arguments:
+    features -- preprocessed features
+    threshold -- prediction threshold
+    '''
     logits = model.predict(features)[0]
     indexes = logits < threshold
     logits[indexes] = 0
@@ -48,6 +70,12 @@ def predict(features, threshold):
         return(LABELS[4], .42)
 
 def specm_stream_window(*args):
+    '''Receives data from server and stores 50 samples inside a 
+    global dictionary, preprocesses the data, makes a prediction
+    and maps each prediction to a different key in the keyboard
+    (Model using spectrograms)
+    '''
+    
     global g_iter, CH_DATA, prev_action
     
     for x in range(1, NB_CHANNELS + 1):
@@ -78,6 +106,12 @@ def specm_stream_window(*args):
         prev_action = action_index
         
 def rdm_stream_window(*args):
+        '''Receives data from server and stores 50 samples inside a 
+    global dictionary, preprocesses the data, makes a prediction
+    and maps each prediction to a different key in the keyboard
+    (Model using raw data)
+    '''
+    
     global g_iter, CH_DATA, prev_action
     
     for x in range(1, NB_CHANNELS + 1):
@@ -125,15 +159,16 @@ if __name__ == "__main__":
 
     # Local path to trained weights file
     if args.model == "spectrogram":
-        model = load_model('./model_2.h5')
+        model = load_model('../models/model_2.h5')
         stream_window = specm_stream_window
     
     elif args.model == "RD":
-        model = load_model('./RDM_V3.h5')
+        model = load_model('../models/RDM_V3.h5')
         stream_window = rdm_stream_window
     
     else:
         print('Please select a valid model')
+        sys.exit()
     
     dispatcher = dispatcher.Dispatcher()
     dispatcher.map("/openbci", stream_window)
