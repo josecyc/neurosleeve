@@ -85,7 +85,7 @@ def specm_stream_window(*args):
         CH_DATA[ch].append(round(args[x], 2))
 
     g_iter += 1
-    if g_iter % 200 in times and g_iter >= 50:
+    if g_iter % 200 in TIMES and g_iter >= 50:
         x_data = pd.DataFrame(CH_DATA)
         x_data = preprocess(x_data)
         action, confidence = predict(x_data, .45)
@@ -106,12 +106,11 @@ def specm_stream_window(*args):
         prev_action = action_index
         
 def rdm_stream_window(*args):
-        '''Receives data from server and stores 50 samples inside a 
+    '''Receives data from server and stores 50 samples inside a 
     global dictionary, preprocesses the data, makes a prediction
     and maps each prediction to a different key in the keyboard
     (Model using raw data)
     '''
-    
     global g_iter, CH_DATA, prev_action
     
     for x in range(1, NB_CHANNELS + 1):
@@ -121,7 +120,7 @@ def rdm_stream_window(*args):
         CH_DATA[ch].append(round(args[x], 2))
 
     g_iter += 1
-    if g_iter % 200 in times and g_iter >= 50:
+    if g_iter % 200 in TIMES and g_iter >= 50:
         x_data = pd.DataFrame(CH_DATA).transpose().values.flatten().reshape([1, 200])
         action, confidence = predict(x_data, .85)
         actions.append(action)
