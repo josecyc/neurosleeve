@@ -1,0 +1,7 @@
+pandas
+colored
+python-osc
+numpy
+scipy
+matplotlib
+tensorflow==2.0.0-alpha0
