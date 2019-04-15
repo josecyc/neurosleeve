@@ -22,4 +22,6 @@ Model type
   * `RD`: loads raw data model weights and predicts an action every 10 data points or 50 ms
 
 Ex:
-`python3 --option=spectrogram`
+`python3 --model spectrogram`
+
+Will setup a listener in ip `localhost`, port `12345` and address `/openbci` and begin predicting once the OpenBCI GUI begins sending data. 
