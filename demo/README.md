@@ -20,3 +20,6 @@ Model type
 * `--option`
   * `spectrogram`: loads spectrogram model weights, preprocesses the data and predicts an action every 10 data points or 50 ms
   * `RD`: loads raw data model weights and predicts an action every 10 data points or 50 ms
+
+Ex:
+`python3 --option=spectrogram`
