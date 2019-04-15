@@ -1,6 +1,18 @@
 ## osc_collect_data.py description:
 
-This script helps you to collect your data and turn it into .csv files, to do this the script outputs a label and waits 5 seconds for you to adjust to the position assigned to that label, then records 10 seconds of data at 200 Hz which is splitted into 40 sub samples
+This script helps you to collect your data with the OpenBCI GUI and turn it into .csv files, to do this the script outputs a label and waits 5 seconds for you to adjust to the position assigned to that label, then records 10 seconds of data at 200 Hz which is splitted into 40 sub samples
+
+Setting up the OpenBCI GUI for streaming:
+
+1) Open GUI and connect via bluetooth to OpenBCI Ganglion
+2) Start system
+3) Select networking widget with timeseries option and start system
+4) Start data streaming
+
+example:
+<p align="center">
+  <img width="800" height="500" src="../images/open_bci_gui.png">
+</p>
 
 ### osc_collect_data.py arguments:
 
