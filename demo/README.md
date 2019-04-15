@@ -29,8 +29,17 @@ Model type
   * `spectrogram`: loads spectrogram model weights, preprocesses the data and predicts an action every 10 data points (50 ms)
   * `RD`: loads raw data model weights and predicts an action every 10 data points (50 ms)
 
-Ex:
+##osc_collect_data.py sample usage:
+```
+$ python3 stream.py
+--------------------
+ -- OSC LISTENER --
+--------------------
+IP: localhost
+PORT: 12345
+ADDRESS: /openbci
+--------------------
 
-`python3 stream.py --model spectrogram`
-
+Action: stop Confidence: 99.0% Key: Key.space
+```
 Will setup a listener in ip `localhost`, port `12345`, address `/openbci` and will predict actions once the OpenBCI GUI begins streaming data. 
