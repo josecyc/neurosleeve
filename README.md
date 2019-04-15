@@ -19,7 +19,7 @@ This is an implementation of a ConvNet to predict the position of the hand using
 
 ### Our data acquisition method:
 
-Our dataset includes about 1100 examples for every hand gesture, we are open-sourcing in the hope of beneffiting the community and obtaining feedback. To build our dataset we decided to have six hand positions(labels) as well as a neutral position:
+Our dataset includes about 1100 examples for every hand gesture, we are open-sourcing it in the hope of beneffiting the community and obtaining feedback. To build our dataset we decided to have six hand positions(labels) as well as a neutral position:
 
 <p align="center">
   <img width="60%" height="60%" src="images/Movements and labels.png">
