@@ -4,8 +4,6 @@ We use OSC to stream the data obtaining the sEMG signals from the forearm and tr
 
 Uses the python-osc library to communicate with the OpenBCI device.
 
-Device used: OpenBCI Ganglion
-
 Setting up the OpenBCI GUI for streaming:
 
 1) Open GUI and connect via bluetooth to OpenBCI Ganglion
