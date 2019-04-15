@@ -1,6 +1,6 @@
 # Neurosleeve
 ## Deep Learning For Hand Gesture Signal Classification
-This is an implementation of a ConvNet to predict the position of the hand using four Double-Differential sEMG signals from the forearm.
+This is an implementation of a ConvNet to predict the position of the hand using four Double-Differential sEMG signals from the forearm. To stream the sEMG signals we used a [Ganglion Board](https://shop.openbci.com/collections/frontpage/products/pre-order-ganglion-board?variant=13461804483) from OpenBCI and ts [GUI networking widget](https://docs.openbci.com/OpenBCI%20Software/01-OpenBCI_GUI).
 
 <p align="center">
   <img width="800" height="500" src="images/Demo.gif">
@@ -8,7 +8,7 @@ This is an implementation of a ConvNet to predict the position of the hand using
 
 ### The repository includes:
 * Source code of two ConvNets that work with spectrograms or the raw data from the four channels
-* [Script](data/osc_collect_data.py) to collect data using a Ganglion Board from OpenBCI
+* [Script](data/osc_collect_data.py) to collect data
 * Dataset built from [josecyc](https://github.com/josecyc) and [DanielCordovaV](https://github.com/DanielCordovaV)
 * Pre-trained weights for this dataset
 * [Demo](demo/stream.py) that maps predictions from model to certain keys
