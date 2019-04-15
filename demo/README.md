@@ -29,7 +29,7 @@ Model type
   * `spectrogram`: loads spectrogram model weights, preprocesses the data and predicts an action every 10 data points (50 ms)
   * `RD`: loads raw data model weights and predicts an action every 10 data points (50 ms)
 
-##osc_collect_data.py sample usage:
+## osc_collect_data.py sample usage:
 ```
 $ python3 stream.py
 --------------------
