@@ -30,7 +30,7 @@ To build our dataset we decided to have six hand positions(labels) as well as a 
 
 ## Electrode Placement
 
-The method we used was placing four pairs of electrodes to measure the Double-Differential sEMG signal from the muscles after thorough research we settled on a location at 90% the distance from the wrist. We tried to target(Flexor Digitorum Profundus, Extensor Digitorium Communis , Extensor Capri Radialis Longus and Flexor Carpi Radialis) precise location can be appreciated in pictures, we didn't notice substantial difference in minor differences in placement on subsequent prediction sessions.
+The method we used was placing four pairs of electrodes to measure the Double-Differential sEMG signal from the muscles after thorough research we settled on a location at 90% the distance from the wrist. We tried to target(Flexor Digitorum Profundus, Extensor Digitorium Communis , Extensor Capri Radialis Longus and Flexor Carpi Radialis) precise location can be appreciated in pictures. We didn't notice substantial difference in minor differences in placement on subsequent prediction sessions.
 We hold the same position for ten seconds at 200 Hz then splitting that into 40 sub samples.
 
 <p align="center">
