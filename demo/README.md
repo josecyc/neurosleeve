@@ -6,6 +6,12 @@ Uses the python-osc library to communicate with the OpenBCI device.
 
 Device used: OpenBCI Ganglion
 
+Setting up the OpenBCI GUI for streaming
+
+1) Connect via bluetooth to OpenBCI Ganglion
+2) Start system
+3) Select networking widget
+
 Communication parameters
 
 * `--ip`
