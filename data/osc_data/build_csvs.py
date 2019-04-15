@@ -11,12 +11,9 @@ LABEL_DFS = {key: pd.DataFrame(np.array([pd.read_csv(file).transpose().values.fl
 for key in LABELS:
     LABEL_DFS[key] = LABEL_DFS[key].reindex(np.random.permutation(LABEL_DFS[key].index))
     LABEL_DFS[key]['label'] = np.repeat(key, LABEL_DFS[key].shape[0])
-train = pd.concat([LABEL_DFS[label].iloc[:int(LABEL_DFS[label].shape[0]*.8)] for label in LABELS], sort=False, ignore_index=True)
+train = pd.concat([LABEL_DFS[label].iloc[:int(LABEL_DFS[label].shape[0]*.9)] for label in LABELS], sort=False, ignore_index=True)
 train = train.reindex(np.random.permutation(train.index))
-validation = pd.concat([LABEL_DFS[label].iloc[int(LABEL_DFS[label].shape[0]*.8):int(LABEL_DFS[label].shape[0]*.9)] for label in LABELS], sort=False, ignore_index=True)
-validation = validation.reindex(np.random.permutation(validation.index))
 test = pd.concat([LABEL_DFS[label].iloc[int(LABEL_DFS[label].shape[0]*.9):] for label in LABELS], sort=False, ignore_index=True)
 test = test.reindex(np.random.permutation(test.index))
 train.to_csv('train.csv', index=False)
-validation.to_csv('validation.csv', index=False)
 test.to_csv('test.csv', index=False)
