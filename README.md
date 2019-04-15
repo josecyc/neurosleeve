@@ -50,4 +50,7 @@ Install required modules:
   
 <hr>
 
-Shoutout to [Taylor Yang](https://github.com/rdmcolorz) who provided the code for most of the streaming part of this project with his [openbci_stream](https://github.com/rdmcolorz/openbci_stream) repo
+## Special thanks to:
+
+* [Taylor Yang](https://github.com/rdmcolorz) who provided the code for most of the streaming part of this project with his [openbci_stream](https://github.com/rdmcolorz/openbci_stream) repo
+* 42 Silicon Valley, specifically to 42 Robotics for providing the enviroment in which this project was developed
