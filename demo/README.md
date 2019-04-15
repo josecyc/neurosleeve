@@ -10,6 +10,10 @@ Setting up the OpenBCI GUI for streaming:
 2) Start system
 3) Select networking widget with timeseries option and start system
 
+<p align="center">
+  <img width="800" height="500" src="../images/open_bci_gui.gif">
+</p>
+
 Communication parameters
 
 * `--ip`
