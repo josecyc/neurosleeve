@@ -23,6 +23,16 @@ LABELS = [
     'alpha', 'go', 'left', 'neutral',
     'omega', 'right', 'stop'
     ]
+dir_path = os.path.join(ROOT, 'osc_data')
+try:
+    os.mkdir(dir_path)
+except FileExistsError:
+    pass
+for label in LABELS:
+    try:
+        os.mkdir(os.path.join(dir_path, label))
+    except FileExistsError:
+            pass
 LABEL_COUNT = {
     label: len(os.listdir('osc_data/{}'.format(label))) + 1
     for label in LABELS
@@ -118,16 +128,6 @@ if __name__ == "__main__":
     if sys.version_info.major == 3:
         dispatcher = dispatcher.Dispatcher()
         
-        dir_path = os.path.join(ROOT, "osc_data")
-        try:
-            os.mkdir(dir_path)
-        except FileExistsError:
-            pass
-        for label in LABELS:
-            try:
-                os.mkdir(os.path.join(dir_path, label))
-            except FileExistsError:
-                pass
         dispatcher.map("/openbci", stream_window, dir_path)
         signal.signal(signal.SIGINT, exit_print)
 
