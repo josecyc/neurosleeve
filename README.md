@@ -1,6 +1,6 @@
 # Neurosleeve
 ## Deep Learning For Hand Gesture Signal Classification
-This is an implementation of a ConvNet to predict the position of the hand using four Double-Differential sEMG signals from the forearm.
+This is an implementation of a ConvNet to predict the position of the hand using four Double-Differential sEMG signals from the forearm. To stream the sEMG signals we used a [Ganglion Board](https://shop.openbci.com/collections/frontpage/products/pre-order-ganglion-board?variant=13461804483) from OpenBCI and its [GUI networking widget](https://docs.openbci.com/OpenBCI%20Software/01-OpenBCI_GUI).
 
 <p align="center">
   <img width="800" height="500" src="images/Demo.gif">
@@ -8,7 +8,7 @@ This is an implementation of a ConvNet to predict the position of the hand using
 
 ### The repository includes:
 * Source code of two ConvNets that work with spectrograms or the raw data from the four channels
-* [Script](data/osc_collect_data.py) to collect data using a Ganglion Board from OpenBCI
+* [Script](data/osc_collect_data.py) to collect data
 * Dataset built from [josecyc](https://github.com/josecyc) and [DanielCordovaV](https://github.com/DanielCordovaV)
 * Pre-trained weights for this dataset
 * [Demo](demo/stream.py) that maps predictions from model to certain keys
@@ -28,7 +28,10 @@ To build our dataset we decided to have six hand positions(labels) as well as a 
   <img width="30%" height="30%" src="images/Neutral position.png">
 </p>
 
-The method we used was placing four pairs of electrodes to measure the Double-Differential sEMG signal from the muscles we tried to target(Flexor Digitorum Profundus, Extensor DigitoriumCommunis , Extensor Capri Radialis Longus and Flexor Carpi Radialis), holding the same position for ten seconds at 200 Hz then splitting that into 40 sub samples.
+## Electrode Placement
+
+The method we used was placing four pairs of electrodes to measure the Double-Differential sEMG signal from the muscles after thorough research we settled on a location at 90% the distance from the wrist. We tried to target(Flexor Digitorum Profundus, Extensor Digitorium Communis , Extensor Capri Radialis Longus and Flexor Carpi Radialis) precise location can be appreciated in pictures. We didn't notice substantial difference in minor differences in placement on subsequent prediction sessions.
+We hold the same position for ten seconds at 200 Hz then splitting that into 40 sub samples.
 
 <p align="center">
   <img width="30%" height="30%" src="images/Electrode position.png">
@@ -50,4 +53,7 @@ Install required modules:
   
 <hr>
 
-Shoutout to [Taylor Yang](https://github.com/rdmcolorz) who provided the code for most of the streaming part of this project with his [openbci_stream](https://github.com/rdmcolorz/openbci_stream) repo
+## Special thanks to:
+
+* [Taylor Yang](https://github.com/rdmcolorz) who provided the code for most of the streaming part of this project with his [openbci_stream](https://github.com/rdmcolorz/openbci_stream) repo
+* 42 Silicon Valley, specifically to 42 Robotics for providing the enviroment in which this project was developed
