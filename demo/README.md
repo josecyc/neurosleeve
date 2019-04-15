@@ -24,4 +24,4 @@ Model type
 Ex:
 `python3 stream.py --model spectrogram`
 
-Will setup a listener in ip `localhost`, port `12345` and address `/openbci` and begin predicting once the OpenBCI GUI begins sending data. 
+Will setup a listener in ip `localhost`, port `12345`, address `/openbci` and will predict actions once the OpenBCI GUI begins streaming data. 
