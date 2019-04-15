@@ -53,6 +53,10 @@ Install required modules:
   
 <hr>
 
+## Resources
+
+Includes research papers on which we built upon for this project.
+
 ## Special thanks to:
 
 * [Taylor Yang](https://github.com/rdmcolorz) who provided the code for most of the streaming part of this project with his [openbci_stream](https://github.com/rdmcolorz/openbci_stream) repo
