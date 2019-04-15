@@ -1,6 +1,6 @@
 # Neurosleeve
 ## Deep Learning For Hand Gesture Signal Classification
-This is an implementation of a ConvNet to predict the position of the hand using four Double-Differential sEMG signals from the forearm. To stream the sEMG signals we used a [Ganglion Board](https://shop.openbci.com/collections/frontpage/products/pre-order-ganglion-board?variant=13461804483) from OpenBCI and ts [GUI networking widget](https://docs.openbci.com/OpenBCI%20Software/01-OpenBCI_GUI).
+This is an implementation of a ConvNet to predict the position of the hand using four Double-Differential sEMG signals from the forearm. To stream the sEMG signals we used a [Ganglion Board](https://shop.openbci.com/collections/frontpage/products/pre-order-ganglion-board?variant=13461804483) from OpenBCI and its [GUI networking widget](https://docs.openbci.com/OpenBCI%20Software/01-OpenBCI_GUI).
 
 <p align="center">
   <img width="800" height="500" src="images/Demo.gif">
@@ -28,7 +28,7 @@ To build our dataset we decided to have six hand positions(labels) as well as a 
   <img width="30%" height="30%" src="images/Neutral position.png">
 </p>
 
-The method we used was placing four pairs of electrodes to measure the Double-Differential sEMG signal from the muscles we tried to target(Flexor Digitorum Profundus, Extensor DigitoriumCommunis , Extensor Capri Radialis Longus and Flexor Carpi Radialis), holding the same position for ten seconds at 200 Hz then splitting that into 40 sub samples.
+The method we used was placing four pairs of electrodes to measure the Double-Differential sEMG signal from the muscles we tried to target(Flexor Digitorum Profundus, Extensor Digitorium Communis , Extensor Capri Radialis Longus and Flexor Carpi Radialis), holding the same position for ten seconds at 200 Hz then splitting that into 40 sub samples.
 
 <p align="center">
   <img width="30%" height="30%" src="images/Electrode position.png">
