@@ -8,7 +8,7 @@ Setting up the OpenBCI GUI for streaming:
 
 1) Open GUI and connect via bluetooth to OpenBCI Ganglion
 2) Start system
-3) Select networking widget with timeseries option and start system
+3) Select networking widget with timeseries option, start system and start networking widget
 
 example:
 <p align="center">
