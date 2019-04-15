@@ -1,4 +1,5 @@
 # Neurosleeve
+## Deep Learning For Hand Gesture Signal Classification
 This is an implementation of a ConvNet to predict the position of the hand using four Double-Differential sEMG signals from the forearm.
 
 <p align="center">
