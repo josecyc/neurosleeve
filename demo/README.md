@@ -8,7 +8,15 @@ Device used: OpenBCI Ganglion
 
 Communication parameters
 
+* `--ip`
+  * The ip to be listened, default = `localhost`
+* `--port`
+  * The port to be listened, default = `12345`
+* `--address`
+  * Address to be listened, default = `/openbci`
+
+
 Model type
---option
- # spectrogram: loads spectrogram model weights, preprocesses the data and predicts an action every 10 data points or 50 ms
- # RD: loads raw data model weights and predicts an action every 10 data points or 50 ms
+* `--option`
+  * spectrogram: loads spectrogram model weights, preprocesses the data and predicts an action every 10 data points or 50 ms
+  * RD: loads raw data model weights and predicts an action every 10 data points or 50 ms
