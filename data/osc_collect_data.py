@@ -23,6 +23,7 @@ LABELS = [
     'alpha', 'go', 'left', 'neutral',
     'omega', 'right', 'stop'
     ]
+ROOT = os.getcwd()
 dir_path = os.path.join(ROOT, 'osc_data')
 try:
     os.mkdir(dir_path)
@@ -46,7 +47,6 @@ COLORS = [
 INTERVAL = 15 # seconds to record of each label
 SAMPLE_RATE = 200
 SAMPLES_PER_INTERVAL = INTERVAL * SAMPLE_RATE
-ROOT = os.getcwd()
 CHECKPOINTS = list(range(1049,3049,50))
 
 def output_command(s_label, color):
